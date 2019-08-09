@@ -1,7 +1,9 @@
-package $package$.util.jwt
+package $package$
+package util
+package jwt
 
 import authentikat.jwt._
-import $package$.http.ApiClientIdentity
+import http.ApiClientIdentity
 import com.typesafe.scalalogging.LazyLogging
 
 /**
