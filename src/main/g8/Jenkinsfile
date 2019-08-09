@@ -1,0 +1,151 @@
+// =============================================== //
+// =============================================== //
+// Here you can setup your project specific stuff  //
+// =============================================== //
+// =============================================== //
+
+// ==> Credentials for bitbucket
+String credentialForBitBucket = ''
+// ==> Memory to be used for the sbt command to run all the task in a single line
+String pipelineSbtMem = 2024
+// ==>> The application name. Example: dragonfly, goldfish,...
+String appName = 'bunic-app'
+// ==>> List of modules that are deployed as services in DCOS. Example: api, price-diff,...
+LinkedList servicesModules = ["api"]
+// LinkedList additionalModules = ["api", "common"]
+
+LinkedList allModules = additionalModules // servicesModules +
+
+String dockerizableModulesAsStringArray = servicesModules.join(";")
+
+pipeline {
+	agent {
+		label 'bunyod'
+	}
+	environment {
+		COMMIT_PREFIX = sh(script: "git --no-pager log --format=format:%s -1 ${GIT_COMMIT} | grep -E --only-matching '^(PATCH|MINOR|MAJOR)' | cat", returnStdout: true).trim()
+	}
+	stages {
+		stage('Prepare environment'){
+			steps {
+				setJenkinsUserId script: this
+			}
+		}
+		stage('Master/Stage deployment') {
+			when {
+				branch 'master'
+				expression {
+					shouldBump("${env.COMMIT_PREFIX}")
+				}
+			}
+			agent {
+				label 'bunyod'
+			}
+			stages {
+				stage('Deploy: Tag on commit prefix') {
+					steps {
+						sshagent(credentials: ["$credentialForBitBucket"]) {
+							sh '''
+									CURRENT_VERSION=$(git describe --tags --abbrev=0)
+									BUMP=$(echo "$COMMIT_PREFIX" | tr '[:upper:]' '[:lower:]')
+									BUMPED_VERSION=$(docker run --rm marcelocorreia/semver semver -c -i ${BUMP} ${CURRENT_VERSION})
+									TAG_MESSAGE="Created tag on "$(date)" via Jenkins"
+									git tag -a "v${BUMPED_VERSION}" -m '${TAG_MESSAGE}'
+									git push --tags
+								 '''
+						}
+					}
+				}
+				stage('Deploy: Prepare') {
+					steps {
+						script {
+							env.TAG = sh(script: "git describe --tags --abbrev=0", returnStdout: true).trim()
+							echo "Working on version ${env.TAG}"
+						}
+					}
+				}
+				stage('Deploy: Build docker images') {
+					steps {
+						sh "sh ./jenkins/build-images.sh ${appName} ${dockerizableModulesAsStringArray} ${env.TAG}"
+					}
+				}
+				stage("Deploy: Update DCOS services") {
+					steps {
+					}
+				}
+			}
+		}
+		stage('Master review pipeline') {
+			when {
+				branch 'master'
+			}
+			stages {
+				stage('Integration tests') {
+					agent {
+						label 'bunyod'
+					}
+					steps {
+						// SBT_OPTS="-Xms512M -Xmx1024M -Xss2M -XX:MaxMetaspaceSize=1024M"
+						sh "JENKINS_USER_ID=${JENKINS_USER_ID} docker-compose -f docker-compose-it.yml -p gg_${env.GIT_COMMIT} run --entrypoint='/root/jenkins/sbt-in-docker.sh coverage it:test' --rm ggit"
+					}
+					post {
+						always {
+							junit '**/target/test-reports/*.xml'
+							sh "docker-compose -f docker-compose-it.yml -p gg_${env.GIT_COMMIT} down"
+						}
+					}
+				}
+			}
+		}
+		stage('Pull Request') {
+			when {
+				not {
+					branch 'master'
+				}
+			}
+			stages {
+				stage('Integration tests') {
+					agent {
+						label 'bunyod'
+					}
+					steps {
+						// SBT_OPTS="-Xms512M -Xmx1024M -Xss2M -XX:MaxMetaspaceSize=1024M"
+						sh "JENKINS_USER_ID=${JENKINS_USER_ID} docker-compose -f docker-compose-it.yml -p gg_${env.GIT_COMMIT} run --entrypoint='/root/jenkins/sbt-in-docker.sh coverage it:test' --rm ggit"
+					}
+					post {
+						always {
+							junit '**/target/test-reports/*.xml'
+							sh "docker-compose -f docker-compose-it.yml -p gg_${env.GIT_COMMIT} down"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+static def shouldBump(String value) {
+	value == "PATCH" || value == "MINOR" || value == "MAJOR"
+}
+
+def setJenkinsUserId(Map parameters) {
+	def script = parameters.script
+	script.env.JENKINS_USER_ID = sh(script: "echo \$(id -u):\$(id -g)", returnStdout: true)
+}
+
+def publishCoverageReportsForModules(String[] targetModules) {
+
+	for (Integer i = 0; i < targetModules.length; i++) {
+		String target = "${targetModules[i]}"
+		publishHTML(
+				reportDir: "${target}/target/scala-2.12/scoverage-report/",
+				reportFiles: 'index.html',
+				reportName: 'Scoverage Report:',
+				reportTitles: "Scoverage Report:${target}",
+				keepAll: true,
+				alwaysLinkToLastBuild: false,
+				allowMissing: false
+		)
+	}
+
+}

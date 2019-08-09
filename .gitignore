@@ -1,0 +1,27 @@
+### Scala ###
+*.class
+*.log
+
+### sbt specific ###
+.history
+target/
+*/target
+src_managed/
+.cache
+.lib/
+dist/*
+lib_managed/
+project/boot/
+project/plugins/project/
+
+### IntelliJ specific ###
+.idea
+*.iml
+out
+*.ipr
+*.iws
+
+### sonar scan output ###
+.sonarwork/
+
+secrets.*

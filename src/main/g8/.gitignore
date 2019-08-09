@@ -1,0 +1,8 @@
+.idea/
+target/
+project/project/
+.DS_Store
+*.iml
+.bloop/
+.metals/
+.history/

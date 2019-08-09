@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Sentry
+    <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+    -->
+
+    <!-- Console -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>application.log</file>
+        <encoder>
+            <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="akka" level="WARN" />
+    <logger name="akka.http" level="warn"/>
+    <logger name="akka.event.slf4j" level="warn"/>
+
+    <logger name="com.bunic" level="INFO"/>
+
+    <logger name="io.swagger" level="error"/>
+    <logger name="com.typesafe.sslconfig.ssl.ConfigSSLContextBuilder" level="error" />
+
+    <!-- Use appenders depending on environment -->
+    <if condition='!isDefined("ENVIRONMENT")'>
+        <then>
+            <!-- No environment defined - local development -->
+            <variable name="LOG_LEVEL" value="${LOG_LEVEL:-debug}" />
+            <root level="${LOG_LEVEL}">
+                <appender-ref ref="Console"/>
+            </root>
+        </then>
+        <else>
+            <if condition='property("ENVIRONMENT").contains("prod") || property("ENVIRONMENT").contains("stage")'>
+                <then>
+                    <if condition='property("DEBUG").contains("true")'>
+                        <then>
+                            <!-- Debug in stage/production -->
+                            <root level="debug">
+                                <appender-ref ref="Console"/>
+                                <appender-ref ref="Sentry"/>
+                            </root>
+                        </then>
+                        <else>
+                            <!-- Normal logging in stage/production -->
+                            <root level="info">
+                                <appender-ref ref="Console"/>
+                            </root>
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <!-- Invalid environment defined -->
+                    <root level="warn">
+                        <appender-ref ref="Console"/>
+                    </root>
+                </else>
+            </if>
+        </else>
+    </if>
+
+</configuration>
