@@ -8,11 +8,9 @@ import com.typesafe.scalalogging.LazyLogging
   * Run this to generate tokens for an API client.
   */
 object JWTGenerator extends App with LazyLogging {
-  /**
-    * Change this to generate a token for a client
-    */
-  val clientId = "developer" // Used for identifying who is using our API
-  val jwtSecret = "tyQPjw7tVfAzLBSdAnDVjLXjms6DqsoBIQoaRLRJ" // Used for signing the token
+
+  val clientId = "changeme" // Used for identifying who is using our API
+  val jwtSecret = "changeme" // Used for signing the token
   val jwtSigningAlgorithm = "HS256" // Used for signing the token
 
   /**
@@ -22,8 +20,8 @@ object JWTGenerator extends App with LazyLogging {
     * @return
     */
   def generateToken(apiClientIdentity: ApiClientIdentity): String = {
-    val claims = JwtClaimsSetMap(Map("clientId" -> apiClientIdentity.clientId)
-    JsonWebToken.apply(JwtHeader(jwtSigningAlgorithm), claims, jwtSecret)
+    val claims = JwtClaimsSetMap(Map("clientId" -> apiClientIdentity.clientId))
+    JsonWebToken(JwtHeader(jwtSigningAlgorithm), claims, jwtSecret)
   }
 
   val clientIdentity = ApiClientIdentity(clientId)
@@ -33,10 +31,8 @@ object JWTGenerator extends App with LazyLogging {
                  |
      |JWTAuthenticator: Token generator
                  |
-                 |\tClient: clientIdentity
+                 |\tClient: $clientIdentity
                  |\tJWT Token: token
                  |
     """.stripMargin)
-
-  //TODO add dollar sign before clientIdentity and token
 }

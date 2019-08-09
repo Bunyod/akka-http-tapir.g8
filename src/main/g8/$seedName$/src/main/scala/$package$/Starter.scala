@@ -16,7 +16,6 @@ object Starter
     with util.cfg.Configurable
     with util.http.ExceptionHandler
     with util.http.RejectionHandler
-    with util.log.SentryLogging
     with LazyLogging {
 
   def startApplication(): Future[Http.ServerBinding] = {
