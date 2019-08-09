@@ -1,6 +1,7 @@
 package $package$
 
 import akka.http.scaladsl.model._
+import io.circe.generic.auto._
 import io.circe.syntax._
 import io.circe.{Json, Printer}
 

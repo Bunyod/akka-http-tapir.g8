@@ -2,7 +2,7 @@ package $package$
 package http
 
 import akka.http.scaladsl.model.StatusCode
-import io.circe.generic.auto._
+import io.circe.generic.semiauto._
 import io.circe.{Decoder, Encoder}
 
 final case class Error(code: StatusCode, message: String)
@@ -20,6 +20,9 @@ object Error {
           case _: RuntimeException => Left("StatusCode")
         }
     )
+
+  implicit val decoder: Decoder[Error] = deriveDecoder
+  implicit val encoder: Encoder[Error] = deriveEncoder
 
   // private [http] def apply(code: StatusCode, message: String): Error = new Error(code, message)
 

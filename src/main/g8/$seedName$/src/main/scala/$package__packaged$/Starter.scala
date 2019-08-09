@@ -29,12 +29,10 @@ object Starter
     val rteTweet: http.template.$className;format="Camel"$Routes = new http.template.$className;format="Camel"$Routes(svcTweet)
     val tweets: Route = rteTweet.route
 
-    val rteSwagger: http.swagger.SwaggerRoutes = new http.swagger.SwaggerRoutes()
-    val swagger: Route = rteSwagger.route
     val routes: Route = handleRejections(rejectionHandler) {
       handleExceptions(exceptionHandler) {
         cors() {
-          tweets ~ swagger
+          tweets
         }
       }
     }
