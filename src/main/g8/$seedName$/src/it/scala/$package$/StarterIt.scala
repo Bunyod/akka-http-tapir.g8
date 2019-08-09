@@ -3,7 +3,6 @@ package $package$
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
 
-
 class StarterIt extends IntegrationTest {
 
   "Service" should {
