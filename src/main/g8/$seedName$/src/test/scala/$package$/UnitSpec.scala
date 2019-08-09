@@ -25,7 +25,7 @@ abstract class UnitSpec
   )
 
   implicit def myExceptionHandler: ExceptionHandler =
-    ExceptionHandler { case e =>
+    ExceptionHandler { case _ =>
       Directives.complete(HttpResponse(StatusCodes.InternalServerError, entity = "Internal Server Error"))
     }
 
