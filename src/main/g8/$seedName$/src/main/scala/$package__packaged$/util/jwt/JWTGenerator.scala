@@ -3,7 +3,7 @@ package util
 package jwt
 
 import authentikat.jwt._
-import $package$.http.ApiClientIdentity
+import http.ApiClientIdentity
 import com.typesafe.scalalogging.LazyLogging
 
 /**
@@ -33,7 +33,7 @@ object JWTGenerator extends App with LazyLogging {
                  |
      |JWTAuthenticator: Token generator
                  |
-                 |\tClient: $clientIdentity
+                 |\tClient: clientIdentity
                  |\tJWT Token: token
                  |
     """.stripMargin)

@@ -1,4 +1,5 @@
-package $package$.http
+package $package$
+package http
 
 /**
  * Used for authentication of the API client.
