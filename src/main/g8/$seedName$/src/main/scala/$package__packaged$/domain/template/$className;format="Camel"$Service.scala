@@ -1,9 +1,10 @@
-package $package$.domain.template
+package $package$
+package domain
+package template
 
 import akka.http.scaladsl.model.StatusCodes
 import $package$.http.Error
 import com.typesafe.scalalogging.LazyLogging
-
 import scala.concurrent.{ExecutionContext, Future}
 
 /** Service
