@@ -14,23 +14,23 @@ trait ExceptionHandler { self: LazyLogging =>
     case ire: IllegalRequestException =>
       extractUri { uri =>
         logger.error(s"Request to {} could not be handled normally", uri)
-        complete(Error(BadRequest, ire.getMessage).toHttpResponse)
+        complete(Error(BadRequest.intValue, ire.getMessage).toHttpResponse)
       }
     case iae: IllegalArgumentException =>
       extractUri { uri =>
         logger.error(s"Request to {} could not be handled normally", uri)
-        complete(Error(BadRequest, iae.getMessage).toHttpResponse)
+        complete(Error(BadRequest.intValue, iae.getMessage).toHttpResponse)
       }
     case _: ArithmeticException =>
       extractUri { uri =>
         logger.error(s"Request to {} could not be handled normally", uri)
-        complete(Error(InternalServerError, "Arithmetic Exception Occured").toHttpResponse)
+        complete(Error(InternalServerError.intValue, "Arithmetic Exception Occured").toHttpResponse)
       }
     case e: Exception =>
       extractUri { uri =>
         logger.error(s"Request to {} could not be handled normally", uri)
         logger.error(s"Exception during client request processing: {}", e.getMessage)
-        complete(Error(InternalServerError, "Internal Server Error Occured").toHttpResponse)
+        complete(Error(InternalServerError.intValue, "Internal Server Error Occured").toHttpResponse)
       }
   }
 }

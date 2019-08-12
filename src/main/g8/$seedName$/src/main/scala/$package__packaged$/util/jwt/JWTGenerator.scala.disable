@@ -33,7 +33,7 @@ object JWTGenerator extends App with LazyLogging {
                  |
      |JWTAuthenticator: Token generator
                  |
-                 |\tClient: $clientIdentity
+                 |\tClient: clientIdentity
                  |\tJWT Token: token
                  |
     """.stripMargin)

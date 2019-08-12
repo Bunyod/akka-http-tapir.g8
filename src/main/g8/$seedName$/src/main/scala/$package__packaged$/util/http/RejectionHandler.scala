@@ -8,6 +8,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{RejectionHandler => AkkaRejectionHandler, _}
 import $package$.http.Error
 import com.typesafe.scalalogging.LazyLogging
+import io.circe.generic.auto._
 import io.circe.syntax._
 
 /** Developer note:
@@ -24,7 +25,7 @@ trait RejectionHandler { self: LazyLogging =>
     .newBuilder()
     .handle {
       case MissingQueryParamRejection(_) =>
-        val errorResponse = Error(BadRequest, "The required param was not found.")
+        val errorResponse = Error(BadRequest.intValue, "The required param was not found.")
         complete(
           HttpResponse(
             BadRequest,
@@ -34,7 +35,8 @@ trait RejectionHandler { self: LazyLogging =>
     }
     .handle {
       case _: MalformedQueryParamRejection =>
-        val errorResponse = Error(BadRequest, "The request was rejected because a param could not be interpreted")
+        val errorResponse =
+          Error(BadRequest.intValue, "The request was rejected because a param could not be interpreted")
         complete(
           HttpResponse(
             BadRequest,
@@ -44,7 +46,7 @@ trait RejectionHandler { self: LazyLogging =>
     }
     .handle {
       case ValidationRejection(message, _) =>
-        val errorResponse = Error(BadRequest, message)
+        val errorResponse = Error(BadRequest.intValue, message)
         complete(
           HttpResponse(
             BadRequest,
@@ -53,7 +55,7 @@ trait RejectionHandler { self: LazyLogging =>
         )
     }
     .handleNotFound {
-      val errorResponse = Error(NotFound, "The requested resource could not be found.")
+      val errorResponse = Error(NotFound.intValue, "The requested resource could not be found.")
       complete(
         HttpResponse(
           NotFound,
