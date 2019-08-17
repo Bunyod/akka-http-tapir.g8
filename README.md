@@ -16,7 +16,9 @@ in the folder where you want to clone the template.
 
 More details [here](src/main/g8/README.md)
 
-Before clone [read this](src/main/g8/README.md#known-issues)
+
+Note:  
+Before run your app [read this](src/main/g8/README.md#known-issues)
 
 
 License
