@@ -1,6 +1,6 @@
-scala-seed-bb.g8: simple akka-http project template
+akka-http-tapir.g8: akka-http project template with tapir for auto generated OpenApi documentation
 =================
-[![Build Status](https://travis-ci.org/Bunyod/scala-seed-bb.g8.svg?branch=master)](https://travis-ci.org/Bunyod/scala-seed-bb.g8/)
+[![Build Status](https://travis-ci.org/Bunyod/akka-http-tapir.g8.svg?branch=master)](https://travis-ci.org/Bunyod/scala-seed-bb.g8/)
 
 A [Giter8][g8] template for a minimal [akka-http] project.
 
@@ -8,7 +8,7 @@ Template usage
 --------------
 Using `sbt` version `1.2.8`, do:
 ```
-sbt new Bunyod/scala-seed-bb.g8
+sbt new Bunyod/akka-http-tapir.g8
 ```
 in the folder where you want to clone the template.
 
