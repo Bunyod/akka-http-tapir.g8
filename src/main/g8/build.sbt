@@ -59,6 +59,3 @@ val runStart = inputKey[Unit]("Runs web-server")
 runServer := {
   (run in Compile in `$seedName;format="norm"$`).evaluated
 }
-
-mainClass in ~reStart := Some("$package$.Starter")
-
