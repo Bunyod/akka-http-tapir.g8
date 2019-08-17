@@ -25,7 +25,7 @@ class $className;format="Camel"$Service(repo: $className;format="Camel"$Reposito
       .map(_.map(_.transform).asRight[Error])
       .recover { case e: Throwable =>
         logger.error("Error occurred during loading tweets", e)
-        Error(StatusCodes.InternalServerError, "Twitter api is not available").asLeft
+        Error(StatusCodes.InternalServerError.intValue, "Twitter api is not available").asLeft
       }
   }
 

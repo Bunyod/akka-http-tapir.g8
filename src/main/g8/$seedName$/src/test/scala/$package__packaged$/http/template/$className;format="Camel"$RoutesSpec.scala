@@ -54,7 +54,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         (svc.tweets _).when("username", 10).returns(mock)
 
         Get("/tweet/username?limit=10") ~> rte ~> check {
-          status shouldEqual StatusCodes.InternalServerError
+          status shouldEqual StatusCodes.InternalServerError.intValue
           contentType shouldEqual ContentTypes.`application/json`
         }
       }
