@@ -20,8 +20,3 @@ project/plugins/project/
 out
 *.ipr
 *.iws
-
-### sonar scan output ###
-.sonarwork/
-
-secrets.*

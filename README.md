@@ -12,7 +12,10 @@ sbt new Bunyod/scala-seed-bb.g8
 ```
 in the folder where you want to clone the template.
 
-Template license
+More details [here](src/main/g8/README.md)
+
+
+License
 ----------------
 Written in 2019 by [Bunyod Bobojonov]
 
