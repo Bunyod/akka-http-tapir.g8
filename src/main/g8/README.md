@@ -15,7 +15,7 @@ The goal for this project is to provide a multi-sbt project with Generated OpenA
 - [Circe](https://circe.github.io/circe/) for json serialization
 - [Cats](https://typelevel.org/cats/) for FP awesomeness
 - [ScalaTest](http://www.scalatest.org/) for test
-- [Swagger](https://github.com/softwaremill/tapir) for automatically generating an api documentation
+- [Tapir](https://github.com/softwaremill/tapir) for automatically generating an api documentation
 
 ## Resources
 
