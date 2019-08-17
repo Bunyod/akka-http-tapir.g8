@@ -12,11 +12,12 @@ class TemplateEndpoints(basePath: String) {
 
   val versionKey = "v1"
 
-  val getTweets: Endpoint[(String, String), Error, List[String], Nothing] =
+  val getTweets: Endpoint[(String, String, Int), Error, List[String], Nothing] =
     endpoint.get
       .in(auth.bearer)
       .in(basePath / versionKey / "tweet")
-      .in(query[String]("username"))
+      .in(path[String]("username"))
+      .in(query[Int]("limit"))
       .out(jsonBody[List[String]])
       .errorOut(jsonBody[Error])
 
