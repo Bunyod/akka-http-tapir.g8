@@ -41,8 +41,8 @@ lazy val `$seedName;format="norm"$` = baseProject("$seedName;format="norm"$")
   .dependsOn(common)
   .settings(
     libraryDependencies ++= Dependencies.$seedName;format="norm,word,lower"$,
-    Compile/mainClass := Some("$package$.Boot"),
-    mainClass in assembly := Some("$package$.Boot")
+    Compile/mainClass := Some("$package$.Starter"),
+    mainClass in assembly := Some("$package$.Starter")
   )
   .enablePlugins(JavaAppPackaging)
   .enablePlugins(DockerPlugin)

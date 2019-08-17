@@ -7,6 +7,7 @@ import akka.http.scaladsl.server.{Route, RouteConcatenation}
 import akka.stream.ActorMaterializer
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
 import domain.template
+import domain.spec.ApiSpecification
 import repository.template.inmemmory
 import com.typesafe.scalalogging.LazyLogging
 import scala.concurrent.{ExecutionContext, Future}
@@ -29,10 +30,14 @@ object Starter
     val rteTweet: http.template.$className;format="Camel"$Routes = new http.template.$className;format="Camel"$Routes(svcTweet)
     val tweets: Route = rteTweet.route
 
+    val rteSwagger: http.swagger.SwaggerRoutes =
+      new http.swagger.SwaggerRoutes(ApiSpecification.Yaml)
+    val swagger: Route = rteSwagger.routes
+
     val routes: Route = handleRejections(rejectionHandler) {
       handleExceptions(exceptionHandler) {
         cors() {
-          tweets
+          tweets ~ swagger
         }
       }
     }

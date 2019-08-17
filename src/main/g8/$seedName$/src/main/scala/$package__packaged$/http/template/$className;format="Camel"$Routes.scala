@@ -25,7 +25,7 @@ class $className;format="Camel"$Routes(svc: $className;format="Camel"$Service)(i
 
   import akka.http.scaladsl.server.{Directives => directive}
 
-  val route = getTweets ~ add
+  val route = getTweets ~ addTweet
 
   def getTweets: server.Route = directive.get {
     requireAuth { _: ApiClientIdentity =>
@@ -39,7 +39,7 @@ class $className;format="Camel"$Routes(svc: $className;format="Camel"$Service)(i
     }
   }
 
-  def add: server.Route = directive.post {
+  def addTweet: server.Route = directive.post {
     path("tweet") {
       entity(as[Tweet]) { twt =>
         complete(

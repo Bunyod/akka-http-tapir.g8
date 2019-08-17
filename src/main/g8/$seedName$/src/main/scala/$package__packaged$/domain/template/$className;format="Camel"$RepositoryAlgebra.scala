@@ -1,4 +1,6 @@
-package $package$.domain.template
+package $package$
+package domain
+package template
 
 import scala.concurrent.Future
 

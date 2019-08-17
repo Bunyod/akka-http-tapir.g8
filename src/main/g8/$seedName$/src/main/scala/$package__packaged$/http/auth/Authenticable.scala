@@ -1,9 +1,10 @@
-package $package$.http.auth
+package $package$
+package http
+package auth
 
 import akka.http.scaladsl.server.Directives.authenticateOAuth2Async
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.AuthenticationDirective
-import $package$.http.ApiClientIdentity
 import $package$.util.cfg.Configurable
 
 trait Authenticable { self: Configurable =>
