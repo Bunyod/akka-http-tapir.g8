@@ -3,8 +3,8 @@ Tamplate
 
 ## Goal
 The goal for this project is to provide a multi-sbt project with Generated OpenApi documentation. This project has two main sub-modules:
- - `synchronizer` - Imports data from different client (e.g: pe, ugc, pims...) and imported data will be stored in Elasticsearch
- - `api` - Provides interaction with Elasticsearch for website via rest api.
+ - `seed-api` - akka-http server
+ - `common` - common things could be defined for other sub-modules 
 
 
 ## Stack technologies
