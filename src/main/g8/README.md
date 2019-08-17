@@ -3,7 +3,7 @@ Tamplate
 
 ## Goal
 The goal for this project is to provide a multi-sbt project with Generated OpenApi documentation. This project has two main sub-modules:
- - `seed-api` - akka-http server
+ - `seedName` - akka-http server
  - `common` - common things could be defined for other sub-modules 
 
 
@@ -19,7 +19,7 @@ The goal for this project is to provide a multi-sbt project with Generated OpenA
 
 ## Resources
 
-- For setting up the initial `seed` structure, we utilized
+- For setting up the initial `template` structure, we utilized
   [Scala Pet Store](https://github.com/pauljamescleary/scala-pet-store).
 
 - For STAGE/ PROD configuration, we utilized [Production
