@@ -29,7 +29,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         )
         (svc.tweets _).when("username", 10).returns(mock)
 
-        Get("/tweet/username?limit=10") ~> rte ~> check {
+        Get("/api/v1/tweet/username?limit=10") ~> rte ~> check {
           status.intValue() shouldBe 200
           status shouldEqual StatusCodes.OK
         }
@@ -39,7 +39,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         val ctx = new Context with StubData
         import ctx._
 
-        Get("/tweet/username?limi=10") ~> rte ~> check {
+        Get("/api/v1/tweet/username?limi=10") ~> rte ~> check {
           rejection shouldBe an[MissingQueryParamRejection]
         }
       }
@@ -53,7 +53,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         ))
         (svc.tweets _).when("username", 10).returns(mock)
 
-        Get("/tweet/username?limit=10") ~> rte ~> check {
+        Get("/api/v1/tweet/username?limit=10") ~> rte ~> check {
           status shouldEqual StatusCodes.InternalServerError
           contentType shouldEqual ContentTypes.`application/json`
         }

@@ -9,7 +9,7 @@ class StarterIt extends IntegrationTest {
     "bind on port successfully and return 10 tweets" in {
       (for {
         serverBinding <- Starter.startApplication()
-        result <- Http().singleRequest(HttpRequest(uri = "http://localhost:8082/tweet/realDonaldTrump?limit=10"))
+        result <- Http().singleRequest(HttpRequest(uri = "http://localhost:8082/api/v1/tweet/funnytweets?limit=10"))
         _ <- serverBinding.unbind()
       } yield {
         result.status.intValue() shouldBe 200
