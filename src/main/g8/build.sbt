@@ -53,7 +53,8 @@ lazy val common = baseProject("common")
     libraryDependencies ++= Dependencies.common
   )
 
-val runServer = inputKey[Unit]("Runs web-server1")
+val runServer = inputKey[Unit]("Runs web-server")
+val runStart = inputKey[Unit]("Runs web-server")
 
 runServer := {
   (run in Compile in `$seedName;format="norm"$`).evaluated
