@@ -4,7 +4,7 @@ akka-http project template with tapir for auto generated OpenApi [documentation]
 
 [![Build Status](https://travis-ci.org/Bunyod/akka-http-tapir.g8.svg?branch=master)](https://travis-ci.org/Bunyod/scala-seed-bb.g8/)
 
-A [Giter8][g8] template for a minimal [akka-http] project.
+A [Giter8][g8] template for a minimal [akka-http-tapir] project.
 
 Template usage
 --------------

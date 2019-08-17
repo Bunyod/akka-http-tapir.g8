@@ -79,7 +79,7 @@ source folder and execute
 curl -X GET "http://localhost:9000/api/v1/tweet/funnytweets?limit=10" -H "accept: application/json"
 ```
 
-2. Open local http://localhost:9000/docs in your browser
+2. Open `http://localhost:9000/docs` in your browser
 
 ## Pre-Commit Hook
 
@@ -87,13 +87,11 @@ curl -X GET "http://localhost:9000/api/v1/tweet/funnytweets?limit=10" -H "accept
 git commit hooks. The default hooks are defined in `.pre-commit-config.yaml`
 
 For installation on osx run
-
 ```
 brew install pre-commit
 ```
 
 To setup the hooks with pre-commit run:
-
 ```
 pre-commit install -f --install-hooks
 ```
@@ -104,11 +102,10 @@ _Note:_ Conflicts should be resolved
 
 ## Deployment
 
-This section describes how to deploy `SEED` to either `STAGE` or `PROD`.
+This section describes how to deploy `template` to either `STAGE` or `PROD`.
 
 ## Dependency Udpates
-
-```
+```bash
 sbt dependencyUpdates
 ```
 
@@ -116,18 +113,10 @@ Lists newer versions of integrated dependencies from Maven/Ivy
 
 sbt dependencyUpdates
 
-## Linting
-
-Linting is done via scapegoat. It is a static code analyzer inspecting the code with a set of 117 rules.
-Certain files can be excluded, rules can be changed. Configuration is described [here](https://github.com/sksamuel/scapegoat).
-
-The report can be picked up by Jenkins and should be part of the deployment pipeline.
-
 ### Pre-Commit Hook
 This is for manage and configure Git hooks. We setup scalastyle and scalafmt for this project.
 pre-commit-hook is a Git hook manager that runs scalafmt on CHANGED .scala and .sbt files each time you commit them.
 It doesn’t allow you to commit if in your code something is not satisfactory with your configuration file.
-
 ```
 pre-commit install -f --install-hooks
 ```
@@ -139,17 +128,19 @@ Its configured in `.pre-commit-config.yaml` with scalastyle and scalafmt
 - scalastyle-config.xml - (see pre-commit-hook.yaml)
 
 Install `pre-commit` either via `pip` OS independently:
-
-    pip install pre-commit
+```bash
+pip install pre-commit
+```
 
 or via [homebrew](https://brew.sh/) if you are on Mac OS:
-
-    brew install pre-commit
+```bash
+brew install pre-commit
+```
 
 #### Register the hooks
-
-    pre-commit install -f --install-hooks
-
+```bash
+pre-commit install -f --install-hooks
+```
 
 NOTE: make sure that you have above tools locally installed. For that, follow the instruction on:
 - [scalafmt installation page](https://scalameta.org/scalafmt/docs/installation.html).
@@ -164,13 +155,13 @@ More about Git hook for [scalstyle and scalafrm](https://gist.github.com/Bunyod/
 
 ## Known issues
 Please change in SwaggerRoutes
-`
+```
 getFromResourceDirectory("META-INF/resources/webjars/swagger-ui/swaggerVersion/")
-`
+```
 to
-`
+```
 getFromResourceDirectory(s"META-INF/resources/webjars/swagger-ui/$swaggerVersion/")
-`
+```
 
 ### Configuration via Pureconfig
 
