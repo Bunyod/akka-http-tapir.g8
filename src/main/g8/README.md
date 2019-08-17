@@ -73,13 +73,20 @@ source folder and execute
 ```
 ~/your-project-name/> sbt runServer
 ```
+
+And also
+```
+~/your-project-name/> sbt ";project seed-api; ~reStart"
+```
+
 ## Exmaple
-1.
+Try from commandline
 ```
 curl -X GET "http://localhost:9000/api/v1/tweet/funnytweets?limit=10" -H "accept: application/json"
 ```
 
-2. Open `http://localhost:9000/docs` in your browser
+Try from swagger-ui  
+Open `http://localhost:9000/docs/` in your browser
 
 ## Pre-Commit Hook
 
