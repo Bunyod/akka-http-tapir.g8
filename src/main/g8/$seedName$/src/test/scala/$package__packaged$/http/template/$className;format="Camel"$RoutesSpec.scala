@@ -49,7 +49,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         import ctx._
 
         val mock: svc.Response[Seq[String]] = EitherT(Future(
-          Error(StatusCodes.InternalServerError, "Error occurred during getting tweets").asLeft[Seq[String]]
+          Error(StatusCodes.InternalServerError.intValue, "Error occurred during getting tweets").asLeft[Seq[String]]
         ))
         (svc.tweets _).when("username", 10).returns(mock)
 
