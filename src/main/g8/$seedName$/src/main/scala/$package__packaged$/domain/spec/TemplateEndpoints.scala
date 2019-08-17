@@ -16,7 +16,8 @@ class TemplateEndpoints(basePath: String) {
     endpoint.get
       .in(auth.bearer)
       .in(basePath / versionKey / "tweet")
-      .in(query[String]("username"))
+      .in(path[String]("username"))
+      .in(query[Int]("limit"))
       .out(jsonBody[List[String]])
       .errorOut(jsonBody[Error])
 
