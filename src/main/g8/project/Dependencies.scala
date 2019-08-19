@@ -47,6 +47,7 @@ object Dependencies {
     lazy val tapirOpenApi = "com.softwaremill.tapir" %% "tapir-openapi-docs" % Version.tapir
     lazy val tapirOpenApiCirce = "com.softwaremill.tapir" %% "tapir-json-circe" % Version.tapir
     lazy val tapirOpenApiCirceYaml = "com.softwaremill.tapir" %% "tapir-openapi-circe-yaml" % Version.tapir
+    lazy val tapirAkkaHttpServer = "com.softwaremill.tapir"   %% "tapir-akka-http-server"   % Version.tapir
 
     // Logger
     lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % Version.logback
@@ -105,7 +106,8 @@ object Dependencies {
     Include.tapirCore,
     Include.tapirOpenApiCirceYaml,
     Include.tapirOpenApiCirce,
-    Include.tapirOpenApi
+    Include.tapirOpenApi,
+    Include.tapirAkkaHttpServer
   )
 
   val $seedName;format="norm,word,lower"$: Seq[ModuleID] = akka ++ circe ++ logging ++ infrastructure ++
