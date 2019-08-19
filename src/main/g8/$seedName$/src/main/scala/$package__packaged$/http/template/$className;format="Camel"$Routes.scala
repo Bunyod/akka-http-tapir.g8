@@ -37,7 +37,7 @@ class $className;format="Camel"$Routes(svc: $className;format="Camel"$Service)(i
       .out(jsonBody[Seq[String]])
       .errorOut(jsonBody[Error])
 
-  val getTweetsRoute: Route = directive.get {
+  def getTweetsRoute: Route = directive.get {
     requireAuth { _: ApiClientIdentity =>
       getTweetsEndpoint.toRoute {
         case (_, username, limit) =>
