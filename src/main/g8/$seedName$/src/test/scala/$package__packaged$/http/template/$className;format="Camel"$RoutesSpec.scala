@@ -18,12 +18,9 @@ import scala.concurrent.Future
 
 class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactory {
 
-
-/** This tests are broken with new approach
- *
   "The shout route" when {
     "called with 'GET /tweet/'" should {
-      "return with a HTTP status code of 200 and a JSON 'Seq[String]' response" in {
+      "return with a HTTP status code of 200 and a JSON 'Seq[String]' response" is pendingUntilFixed {
         val ctx = new Context with StubData
         import ctx._
 
@@ -38,7 +35,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         }
       }
 
-      "reject with a MissingQueryParamRejection for wrong field name" in {
+      "reject with a MissingQueryParamRejection for wrong field name" is pendingUntilFixed {
         val ctx = new Context with StubData
         import ctx._
 
@@ -47,7 +44,7 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         }
       }
 
-      "return with a HTTP status code of 400 and a JSON 'Error' response" in {
+      "return with a HTTP status code of 400 and a JSON 'Error' response" is pendingUntilFixed {
         val ctx = new Context with StubData
         import ctx._
 
@@ -73,7 +70,5 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
       new template.$className;format="Camel"$Routes(svc).route
     }
   }
-
- */
 
 }
