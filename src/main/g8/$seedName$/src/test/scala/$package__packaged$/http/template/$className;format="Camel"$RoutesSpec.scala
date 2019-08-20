@@ -4,8 +4,8 @@ package template
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
+import akka.http.scaladsl.model.headers.OAuth2BearerToken
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.MissingQueryParamRejection
 import cats.data._
 import cats.implicits._
 import domain.template.$className;format="Camel"$Service
