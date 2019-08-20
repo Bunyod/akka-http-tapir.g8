@@ -4,8 +4,8 @@ package template
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
+import akka.http.scaladsl.model.headers.OAuth2BearerToken
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.MissingQueryParamRejection
 import cats.data._
 import cats.implicits._
 import domain.template.$className;format="Camel"$Service
@@ -18,9 +18,6 @@ import scala.concurrent.Future
 
 class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactory {
 
-
-/** This tests are broken with new approach
- *
   "The shout route" when {
     "called with 'GET /tweet/'" should {
       "return with a HTTP status code of 200 and a JSON 'Seq[String]' response" in {
@@ -30,33 +27,41 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
         val mock: svc.Response[Seq[String]] = EitherT(
           Future(tweets.asRight[Error])
         )
-        (svc.tweets _).when("username", 10).returns(mock)
 
-        Get("/api/v1/tweet/username?limit=10") ~> rte ~> check {
+        (svc.tweets _).when("username", 10).returns(mock)
+        val authorization = OAuth2BearerToken("test")
+
+        Get("/api/v1/tweet/username?limit=10").addCredentials(authorization) ~> rte ~> check {
           status.intValue() shouldBe 200
           status shouldEqual StatusCodes.OK
         }
       }
 
-      "reject with a MissingQueryParamRejection for wrong field name" in {
+      "return BadRequest for wrong field name" in {
         val ctx = new Context with StubData
         import ctx._
 
-        Get("/api/v1/tweet/username?limi=10") ~> rte ~> check {
-          rejection shouldBe an[MissingQueryParamRejection]
+        val authorization = OAuth2BearerToken("test")
+
+        Get("/api/v1/tweet/username?limi=10").addCredentials(authorization) ~> rte ~> check {
+          status shouldEqual StatusCodes.BadRequest
         }
       }
 
-      "return with a HTTP status code of 400 and a JSON 'Error' response" in {
+      "return with a HTTP status code of 400 and a JSON 'Error' response" is pendingUntilFixed {
         val ctx = new Context with StubData
         import ctx._
 
-        val mock: svc.Response[Seq[String]] = EitherT(Future(
-          Error(StatusCodes.InternalServerError.intValue, "Error occurred during getting tweets").asLeft[Seq[String]]
-        ))
+        val mock: svc.Response[Seq[String]] = EitherT(
+          Future(
+            Error(StatusCodes.InternalServerError.intValue, "Error occurred during getting tweets").asLeft[Seq[String]]
+          )
+        )
+        val authorization = OAuth2BearerToken("test")
+
         (svc.tweets _).when("username", 10).returns(mock)
 
-        Get("/api/v1/tweet/username?limit=10") ~> rte ~> check {
+        Get("/api/v1/tweet/username?limit=10").addCredentials(authorization) ~> rte ~> check {
           status shouldEqual StatusCodes.InternalServerError
           contentType shouldEqual ContentTypes.`application/json`
         }
@@ -73,7 +78,5 @@ class $className;format="Camel"$RoutesSpec extends UnitSpec with AsyncMockFactor
       new template.$className;format="Camel"$Routes(svc).route
     }
   }
-
- */
 
 }
